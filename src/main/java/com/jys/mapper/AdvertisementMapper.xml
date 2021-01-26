@@ -1,0 +1,65 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.jys.dao.AdvertisementMapper">
+
+    <insert id="insert" parameterType="com.jys.pojo.Advertisement">
+        insert into advertisement(id,advername,adverclick,advercategory,adverphoto,adverlink,advertanchuang,createtime,adverimgurl,advertext,islink,showpage) values
+         (#{id},#{advername},#{adverclick},#{advercategory},#{adverphoto},#{adverlink},#{advertanchuang},#{createtime},#{adverimgurl},#{advertext},#{islink},#{showpage})
+    </insert>
+
+    <update id="updateclick" parameterType="com.jys.pojo.Advertisement">
+        update advertisement
+        set adverclick=#{adverclick}
+        where id=#{id}
+    </update>
+
+     <select id="listAll"  resultType="com.jys.pojo.Advertisement">
+         select * from advertisement
+     </select>
+
+    <select id="findclick"  resultType="java.lang.Integer" parameterType="java.lang.String">
+         select adverclick from advertisement
+         where id=#{id}
+     </select>
+    <delete id="deleteById" parameterType="java.lang.String">
+       delete from advertisement
+       where id=#{id}
+     </delete>
+
+
+    <select id="findByshow"  resultType="com.jys.pojo.Advertisement" parameterType="java.lang.String">
+         select * from advertisement where showpage=#{showpage}
+     </select>
+
+
+    <update id="update" parameterType="com.jys.pojo.Advertisement">
+        update advertisement
+        set advername=#{advername},
+        advercategory=#{advercategory},
+        adverphoto=#{adverphoto},
+        adverlink=#{adverlink},
+         advertanchuang=#{advertanchuang},
+         createtime=#{createtime},
+         adverimgurl=#{adverimgurl},
+         advertext=#{advertext},
+         islink=#{islink}
+        where id=#{id}
+    </update>
+
+
+    <select id="aaacounts" resultType="java.lang.Integer">
+        select count(*) from advertisement;
+    </select>
+
+    <select id="aaagetProducta" resultType="com.jys.pojo.Advertisement" parameterType="java.lang.Integer">
+        select * from advertisement LIMIT #{start},#{limit}
+    </select>
+
+    <select id="findById" parameterType="java.lang.String" resultType="com.jys.pojo.Advertisement">
+        select * from advertisement
+        where id=#{id}
+    </select>
+
+</mapper>
