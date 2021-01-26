@@ -4,8 +4,8 @@ import com.alibaba.fastjson.JSONObject;
 import com.jys.pojo.Advertisement;
 import com.jys.service.AdvertisementService;
 import lombok.extern.slf4j.Slf4j;
+import org.apache.ibatis.annotations.Param;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.cache.annotation.CachePut;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
@@ -27,23 +27,22 @@ import java.util.*;
 public class AdvertisementController {
     @Autowired
     private AdvertisementService advertisementService;
-    @RequestMapping("/adverlist")
+    @RequestMapping("adverlist")
     public ModelAndView adverlistship(ModelAndView mv){
 //        List<Advertisement> advertisementList=advertisementService.listAll();
 //        mv.addObject("advertisementList",advertisementList);
-        mv.setViewName("advermain");
+        mv.setViewName("adver/advermain");
         return mv;
     }
 
     @RequestMapping("/addle")
     public ModelAndView saddling(ModelAndView mv){
-        mv.setViewName("adder");
+        mv.setViewName("adver/adder");
         return mv;
     }
 
     @RequestMapping("/adver_find")
     public JSONObject adver_findrnd(HttpServletRequest request){
-
 
         Map<String,Object> userMap=new HashMap<String, Object>();
         // 当前页数
@@ -79,7 +78,7 @@ public class AdvertisementController {
         Advertisement advertisement=advertisementService.findById(id);
         log.info("advertisement："+advertisement);
         mv.addObject("advertisement",advertisement);
-        mv.setViewName("updateinfo");
+        mv.setViewName("adver/updateinfo");
         return mv;
     }
 
@@ -103,18 +102,14 @@ public class AdvertisementController {
         advertisement1.setAdverlink(advertisement.getAdverlink());
         advertisement1.setAdvertanchuang(advertisement.getAdvertanchuang());
         advertisement1.setCreatetime(date);
-
+        advertisement1.setWordshow(advertisement.getWordshow());
         advertisement1.setAdverimgurl(imgurl);
         advertisement1.setAdvertext(demo);
         advertisement1.setIslink(advertisement.getIslink());
+           advertisementService.update(advertisement1);
 
-        try{
-//代码区
- advertisementService.update(advertisement1);
-        }catch(Exception e){
-            log.info("异常信息："+e.getMessage());
-//异常处理
-        }
+
+
 
 
         map.put("type","yes");
@@ -141,6 +136,9 @@ public class AdvertisementController {
             advertisement1.setAdverphoto(advertisement.getAdverphoto());
             advertisement1.setAdverlink(advertisement.getAdverlink());
             advertisement1.setAdvertanchuang(advertisement.getAdvertanchuang());
+
+            advertisement1.setWordshow(advertisement.getWordshow());
+
             advertisement1.setCreatetime(date);
             advertisement1.setAdverclick(1);
             advertisement1.setAdverimgurl(imgurl);
@@ -159,7 +157,7 @@ public class AdvertisementController {
 //——》前端的js代码获取到后端传来的图片存储地址，把这个url赋值给表单中的隐藏的图片输入项
 //——》图片输入框中有了地址，并随着表单其他内容一起提交~
     //图片上传测试
-    @RequestMapping("/upload")
+    @RequestMapping("upload")
     public Map<String,Object> upload(MultipartFile file, HttpServletRequest request){
 
         String prefix="";
@@ -178,8 +176,8 @@ public class AdvertisementController {
                 String uuid = UUID.randomUUID().toString().substring(0,8)+"";
                 SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy-MM-dd");
                 dateStr = simpleDateFormat.format(date);
-                String filepath = "D:\\advertisement\\src\\main\\webapp\\images\\" +"\\"+uuid+"." + prefix;
-               // String filepath =  request.getSession().getServletContext().getRealPath("/")+ "/"+"images"+"/"+uuid+"." + prefix;
+                //String filepath = "D:\\shop\\wxshop\\src\\main\\webapp\\images\\" + dateStr+"\\"+uuid+"." + prefix;
+                String filepath =  request.getSession().getServletContext().getRealPath("/")+ "/"+"images"+"/"+uuid+"." + prefix;
 
                 File files=new File(filepath);
                 log.info("files:------"+files);
@@ -276,7 +274,7 @@ public class AdvertisementController {
         }
 
 
-        mv.setViewName("adverpage");
+        mv.setViewName("adver/adverpage");
         return mv;
     }
 
@@ -286,7 +284,7 @@ public class AdvertisementController {
         Advertisement shows=advertisementService.findByshow(show);
         log.info("主页面数据："+show);
         mv.addObject("shows",shows);
-        mv.setViewName("adversecond");
+        mv.setViewName("adver/adversecond");
         return mv;
     }
 
@@ -314,7 +312,66 @@ public class AdvertisementController {
 
         log.info("id："+id);
         mv.addObject("id",id);
-        mv.setViewName("adverlink");
+
+            Advertisement advertisement=advertisementService.findById(id);
+             if (advertisement!=null) {
+                 mv.addObject("advertisement", advertisement.getAdvertext());
+                 mv.addObject("id", advertisement.getId());
+             }
+             else {
+
+             }
+        mv.setViewName("adver/adverlink");
         return mv;
     }
+
+
+    @ResponseBody
+    @RequestMapping(value = "/uploadFile")
+    public String uploadFile(HttpServletRequest request,@Param("file") MultipartFile file) throws IOException {
+        SimpleDateFormat sdf = new SimpleDateFormat("yyyyMMddHHmmssSS");
+        String res = sdf.format(new Date());
+        //服务器上使用
+        // String rootPath =request.getServletContext().getRealPath("/resource/uploads/");//target的目录
+        String rootPath =  request.getSession().getServletContext().getRealPath("/")+ "/"+"images"+"/";
+        log.info("rootPath:"+rootPath);
+        //本地使用
+        //String rootPath ="/Users/liuyanzhao/Documents/uploads/";
+        //原始名称
+        String originalFilename = file.getOriginalFilename();
+        //新的文件名称
+        String newFileName = res+originalFilename.substring(originalFilename.lastIndexOf("."));
+        //创建年月文件夹
+        Calendar date = Calendar.getInstance();
+
+        File dateDirs = new File(date.get(Calendar.YEAR)
+                + File.separator + (date.get(Calendar.MONTH)+1));
+        //新文件
+        File newFile = new File(rootPath+File.separator+dateDirs+File.separator+newFileName);
+           log.info("newFile:"+newFile);
+
+        //判断目标文件所在的目录是否存在
+        if(!newFile.getParentFile().exists()) {
+            //如果目标文件所在的目录不存在，则创建父目录
+            newFile.getParentFile().mkdirs();
+        }
+        System.out.println(newFile);
+        //将内存中的数据写入磁盘
+        file.transferTo(newFile);
+        //完整的url
+        String fileUrl =  "/images/"+date.get(Calendar.YEAR)+ "/"+(date.get(Calendar.MONTH)+1)+ "/"+ newFileName;
+        log.info("fileUrl:"+fileUrl);
+
+        Map<String,Object> map = new HashMap<String,Object>();
+        Map<String,Object> map2 = new HashMap<String,Object>();
+        map.put("code",0);//0表示成功，1失败
+        map.put("msg","上传成功");//提示消息
+        map.put("data",map2);
+        map2.put("src",fileUrl);//图片url
+        map2.put("title",newFileName);//图片名称，这个会显示在输入框里
+        String result = new JSONObject(map).toString();
+        return result;
+    }
+
+
 }

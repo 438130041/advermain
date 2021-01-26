@@ -5,8 +5,8 @@
 <mapper namespace="com.jys.dao.AdvertisementMapper">
 
     <insert id="insert" parameterType="com.jys.pojo.Advertisement">
-        insert into advertisement(id,advername,adverclick,advercategory,adverphoto,adverlink,advertanchuang,createtime,adverimgurl,advertext,islink,showpage) values
-         (#{id},#{advername},#{adverclick},#{advercategory},#{adverphoto},#{adverlink},#{advertanchuang},#{createtime},#{adverimgurl},#{advertext},#{islink},#{showpage})
+        insert into advertisement(id,advername,adverclick,advercategory,adverphoto,adverlink,advertanchuang,createtime,adverimgurl,advertext,islink,showpage,wordshow) values
+         (#{id},#{advername},#{adverclick},#{advercategory},#{adverphoto},#{adverlink},#{advertanchuang},#{createtime},#{adverimgurl},#{advertext},#{islink},#{showpage},#{wordshow})
     </insert>
 
     <update id="updateclick" parameterType="com.jys.pojo.Advertisement">
@@ -44,7 +44,8 @@
          createtime=#{createtime},
          adverimgurl=#{adverimgurl},
          advertext=#{advertext},
-         islink=#{islink}
+         islink=#{islink},
+         wordshow=#{wordshow}
         where id=#{id}
     </update>
 

@@ -16,6 +16,7 @@ public class Advertisement implements Serializable {
     private String advertext;
     private String islink;
     private String showpage;
+    private String wordshow;
 
     @Override
     public String toString() {
@@ -32,7 +33,16 @@ public class Advertisement implements Serializable {
                 ", advertext='" + advertext + '\'' +
                 ", islink='" + islink + '\'' +
                 ", showpage='" + showpage + '\'' +
+                ", wordshow='" + wordshow + '\'' +
                 '}';
+    }
+
+    public String getWordshow() {
+        return wordshow;
+    }
+
+    public void setWordshow(String wordshow) {
+        this.wordshow = wordshow;
     }
 
     public String getShowpage() {

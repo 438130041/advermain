@@ -5,8 +5,8 @@
     <meta name="renderer" content="webkit">
     <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-    <link rel="stylesheet" href="lib/layui-v2.5.5/css/layui.css" media="all">
-    <link rel="stylesheet" href="css/public.css" media="all">
+    <link rel="stylesheet" href="../lib/layui-v2.5.5/css/layui.css" media="all">
+    <link rel="stylesheet" href="../css/public.css" media="all">
     <style>
         body {
             background-color: #ffffff;
@@ -84,6 +84,15 @@
     </div>
 
 
+    <div class="layui-form-item">
+        <label class="layui-form-label required">文字显示</label>
+        <div class="layui-input-block">
+            <input type="text" name="wordshow"  value="${advertisement.wordshow}" class="layui-input">
+            <!--            <tip>填写自己管理账号的名称。</tip>-->
+        </div>
+    </div>
+
+
     <!--************这里是上传图片的代码***************-->
     <!--************这里添加的隐藏的输入框，用来传递images的参数***************-->
     <input type="hidden" name="adverimgurl" class="image">
@@ -101,7 +110,7 @@
 
     <!-- 富文本编辑器-->
     <div class="layui-form-item" id="texts">
-        <label class="layui-form-label required">广告文本消息</label>
+        <label class="layui-form-label required">广告详细内容</label>
         <div class="layui-input-block">
             <textarea id="demo" style="display: none;" lay-verify="content">${advertisement.advertext}</textarea>
         </div>
@@ -114,9 +123,9 @@
     </div>
 </div>
 
-<script src="lib/layui-v2.5.5/layui.js" charset="utf-8"></script>
-<script src="js/jquery-1.10.2.min.js"></script>
-<script src="js/jquery.min.js"></script>
+<script src="../lib/layui-v2.5.5/layui.js" charset="utf-8"></script>
+<script src="../js/jquery-1.10.2.min.js"></script>
+<script src="../js/jquery.min.js"></script>
 <script>
     $(function () {
 
@@ -133,7 +142,12 @@
             layedit = layui.layedit,
             $ = layui.$;
 
-
+        layedit.set({
+            uploadImage: {
+                url: 'uploadFile' //接口url
+                , type: 'post' //默认post
+            }
+        });
         var index=layedit.build('demo'); //建立编辑器
         //图片文字显示
 //编辑器外部操作

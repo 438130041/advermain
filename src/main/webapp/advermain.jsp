@@ -6,8 +6,8 @@
     <meta name="renderer" content="webkit">
     <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-    <link rel="stylesheet" href="lib/layui-v2.5.5/css/layui.css" media="all">
-    <link rel="stylesheet" href="css/public.css" media="all">
+    <link rel="stylesheet" href="../lib/layui-v2.5.5/css/layui.css" media="all">
+    <link rel="stylesheet" href="../css/public.css" media="all">
 </head>
 <style type="text/css">
     .layui-table-cell {
@@ -55,7 +55,7 @@
 
 
 </script>
-<script src="lib/layui-v2.5.5/layui.js" charset="utf-8"></script>
+<script src="../lib/layui-v2.5.5/layui.js" charset="utf-8"></script>
 <script>
     layui.use(['form', 'table',"laydate"], function () {
         var $ = layui.jquery,
@@ -86,7 +86,8 @@
                     , {field: 'adverlink', title: '链接是跳转'}
                     , {field: 'showpage', title: '显示页面'}
                     , {field: 'advertanchuang', title: '是否弹窗显示'}
-                    , {field: 'advertext', title: '广告文本消息'}
+                    ,{field: 'wordshow', title: '文字显示内容'}
+                    , {field: 'advertext', title: '广告详细'}
                     , {field: 'islink', title: '跳转链接'}
                     ,{field:'adverimgurl',title:'广告图片',templet:'<div class="msj"><img src="{{d.adverimgurl}}" class="layui-table-cell"></div>'}
                     , {field: 'createtime', title: '操作时间',templet: '<div>{{layui.util.toDateString(d.createtime, "yyyy-MM-dd  HH:mm:ss") }}</div>',sort:true}

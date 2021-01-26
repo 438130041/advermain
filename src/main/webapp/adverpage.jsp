@@ -67,7 +67,7 @@
 <body>
 
    <div class="showimg"><img src="${shows.adverimgurl}" alt=""></div>
-   <div class="showtext">${shows.advertext}</div>
+   <div class="showtext">${shows.wordshow}</div>
 
 <div class="id" style="display: none">${shows.id}</div>
    <div class="linked" style="display: none">${shows.islink}</div>
@@ -93,14 +93,14 @@
 
 
       <div class="showimgs"><img src="${shows.adverimgurl}" alt=""></div>
-      <div class="showtexts">${shows.advertext}</div>
+      <div class="showtexts">${shows.wordshow}</div>
 
       <div id="btclose" class="zhid">我知道啦</div> </div>
   </div>
 
 </body>
-<script src="js/jquery-1.10.2.min.js"></script>
-<script type="text/javascript" src="js/jquery.min.js"></script>
+<script src="../js/jquery-1.10.2.min.js"></script>
+<script type="text/javascript" src="../js/jquery.min.js"></script>
 <script>
 
     $(function () {

@@ -11,10 +11,12 @@
     <title></title>
 </head>
 <body>
+<div class="advertisement">${advertisement}</div>
+
 <div class="id">${id}</div>
 </body>
-<script src="js/jquery-1.10.2.min.js"></script>
-<script type="text/javascript" src="js/jquery.min.js"></script>
+<script src="../js/jquery-1.10.2.min.js"></script>
+<script type="text/javascript" src="../js/jquery.min.js"></script>
 <script>
     $(function () {
         var id=$(".id").html();
