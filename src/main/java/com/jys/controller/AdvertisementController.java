@@ -159,7 +159,7 @@ public class AdvertisementController {
 //——》前端的js代码获取到后端传来的图片存储地址，把这个url赋值给表单中的隐藏的图片输入项
 //——》图片输入框中有了地址，并随着表单其他内容一起提交~
     //图片上传测试
-    @RequestMapping("upload")
+    @RequestMapping("/upload")
     public Map<String,Object> upload(MultipartFile file, HttpServletRequest request){
 
         String prefix="";
@@ -178,8 +178,8 @@ public class AdvertisementController {
                 String uuid = UUID.randomUUID().toString().substring(0,8)+"";
                 SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy-MM-dd");
                 dateStr = simpleDateFormat.format(date);
-                //String filepath = "D:\\shop\\wxshop\\src\\main\\webapp\\images\\" + dateStr+"\\"+uuid+"." + prefix;
-                String filepath =  request.getSession().getServletContext().getRealPath("/")+ "/"+"images"+"/"+uuid+"." + prefix;
+                String filepath = "D:\\advertisement\\src\\main\\webapp\\images\\" +"\\"+uuid+"." + prefix;
+               // String filepath =  request.getSession().getServletContext().getRealPath("/")+ "/"+"images"+"/"+uuid+"." + prefix;
 
                 File files=new File(filepath);
                 log.info("files:------"+files);
